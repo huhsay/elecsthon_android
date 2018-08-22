@@ -2,6 +2,7 @@ package com.bethejustice.elecchargingstation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,8 @@ import java.util.List;
 public class InitActivity extends AppCompatActivity {
 
     ViewPager pager;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,22 @@ public class InitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_init);
         setViewPager();
 
+        preferences = getSharedPreferences("firstVisit", MODE_PRIVATE);
+        editor = preferences.edit();
+
         Button button = findViewById(R.id.btn_start);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(preferences.contains("first")){
+                    editor.remove("first");
+                    editor.putBoolean("first", true);
+                }else{
+                    editor.putBoolean("first", false);
+                }
+                editor.commit();
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
 
