@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,22 +15,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     CustomDialog dialog;
+    ChangeDestDialog changeDestDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("목적지 설정");
         setSupportActionBar(toolbar);
+
 
         /**
          * fab
          */
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -53,6 +59,14 @@ public class MainActivity extends AppCompatActivity
          */
 
         Dialog();
+
+        Button setDestButton = findViewById(R.id.btn_setDest);
+        setDestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangeDialog();
+            }
+        });
     }
 
     @Override
@@ -115,10 +129,15 @@ public class MainActivity extends AppCompatActivity
 
     public void Dialog(){
         dialog = new CustomDialog(MainActivity.this);
-
-        //요청 이 다이어로그를 종료할 수 있게 지정함
-        dialog.setCancelable(true);
         dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(false);
         dialog.show();
+    }
+
+    public void ChangeDialog(){
+        changeDestDialog = new ChangeDestDialog(MainActivity.this);
+        changeDestDialog.getWindow().setGravity(Gravity.CENTER);
+        changeDestDialog.setCancelable(false);
+        changeDestDialog.show();
     }
 }

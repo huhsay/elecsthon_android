@@ -14,40 +14,47 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="목적지 설정"
+        android:text="목적지 변경하기"
         android:textColor="@color/colorTextDefault"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
+    <ImageView
+        android:id="@+id/btn_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_close_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <LinearLayout
+        android:id="@+id/dest_view_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
-        android:checkedButton="@+id/radio_set1"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-        <RadioButton
-            android:id="@+id/radio_set1"
+        <EditText
+            android:id="@+id/text_dest"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:hint="목적지" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="목적지 정하고 시작하기"
-            tools:layout_editor_absoluteX="69dp"
-            tools:layout_editor_absoluteY="63dp" />
+            android:text="검색" />
+    </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/radio_set2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="목적지 없이 시작하기"
-            tools:layout_editor_absoluteX="69dp"
-            tools:layout_editor_absoluteY="63dp" />
-
-    </RadioGroup>
 
     <Button
         android:id="@+id/btn_select"
@@ -63,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toBottomOf="@id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/dest_view_group"
         app:layout_constraintVertical_bias="0.0" />
 
 

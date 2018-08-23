@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class InitActivity extends AppCompatActivity {
     ViewPager pager;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    SettingDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +39,22 @@ public class InitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_init);
         setViewPager();
 
-        preferences = getSharedPreferences("firstVisit", MODE_PRIVATE);
-        editor = preferences.edit();
+
 
         Button button = findViewById(R.id.btn_start);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(preferences.contains("first")){
-                    editor.remove("first");
-                    editor.putBoolean("first", true);
-                }else{
-                    editor.putBoolean("first", false);
-                }
-                editor.commit();
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                Dialog();
 
-                finish();
+
+
+//                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+//                startActivity(intent);
+//
+//                finish();
             }
         });
 
@@ -111,5 +109,12 @@ public class InitActivity extends AppCompatActivity {
         public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
             return view ==((ImageView) o);
         }
+    }
+
+    public void Dialog(){
+        dialog = new SettingDialog(InitActivity.this);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(false);
+        dialog.show();
     }
 }

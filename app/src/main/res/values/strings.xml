@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">ElecChargingStation</string>
+    <string name="app_name">KEPKO
+    ELESTHONE</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -10,5 +11,5 @@
 
     <!-- main -->
 
-    <string name="btn_setDest">목적지설정</string>
+    <string name="btn_setDest">목적지 변경</string>
 </resources>
