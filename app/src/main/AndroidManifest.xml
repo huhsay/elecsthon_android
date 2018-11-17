@@ -37,7 +37,7 @@
         </activity>
         <activity android:name=".Activity.InitActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme" />
         <activity android:name=".SettingActivity" />

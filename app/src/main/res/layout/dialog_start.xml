@@ -33,38 +33,44 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
-        android:id="@+id/textView_destination"
-        android:layout_width="125dp"
+        android:id="@+id/editView_destination"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="5dp"
         android:hint="목적지검색"
+        app:layout_constraintEnd_toStartOf="@+id/btn_search"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/btn_search"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
         android:layout_marginStart="5dp"
         android:text="검색"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_destination"
-        app:layout_constraintStart_toEndOf="@+id/textView_destination"
-        app:layout_constraintTop_toTopOf="@+id/textView_destination"
+        app:layout_constraintBottom_toBottomOf="@+id/editView_destination"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editView_destination"
+        app:layout_constraintTop_toTopOf="@+id/editView_destination"
         app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/radio_set1"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="8dp"
         android:text="목적지 없이 실행하기"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_destination" />
+        app:layout_constraintTop_toBottomOf="@+id/editView_destination" />
 
     <TextView
-        android:id="@+id/textView_destinationset"
+        android:id="@+id/textView_destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"

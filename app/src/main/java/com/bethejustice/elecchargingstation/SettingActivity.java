@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bethejustice.elecchargingstation.Activity.MainActivity;
+
 public class SettingActivity extends AppCompatActivity {
 
     Toolbar toolbar;

@@ -1,7 +1,6 @@
 package com.bethejustice.elecchargingstation.Activity;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -18,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bethejustice.elecchargingstation.R;
-import com.bethejustice.elecchargingstation.SettingDialog;
+import com.bethejustice.elecchargingstation.Dialog.InitDialog;
 import com.pm10.library.CircleIndicator;
 
 public class InitActivity extends AppCompatActivity {
@@ -27,9 +26,7 @@ public class InitActivity extends AppCompatActivity {
     final int NUMBER_OF_INTRO_PAGE = 3;
 
     ViewPager pager;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-    SettingDialog dialog;
+    InitDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,7 @@ public class InitActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog();
+                openSettingDialog();
             }
         });
 
@@ -98,9 +95,9 @@ public class InitActivity extends AppCompatActivity {
         }
     }
 
-    public void Dialog() {
-        Log.d(TAG, "Dialog: started");
-        dialog = new SettingDialog(InitActivity.this);
+    public void openSettingDialog() {
+        Log.d(TAG, "openSettingDialog: started");
+        dialog = new InitDialog(InitActivity.this);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);
         dialog.show();

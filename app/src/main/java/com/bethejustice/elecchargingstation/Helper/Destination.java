@@ -1,30 +1,29 @@
 package com.bethejustice.elecchargingstation.Helper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-public class VisitChecker {
+public class Destination {
     private static final String TAG = "VisitChecker";
 
     final static String KEY_CHECK_VISIT = "visit";
     final static String KEY_IS_VISITED = "visited";
 
-    private static VisitChecker instance = null;
+    private static Destination instance = null;
     private static Context context;
 
 
     private static SharedPreferences mSharedPreferences;
     private static SharedPreferences.Editor editor;
 
-    private VisitChecker(Context context){
+    private Destination(Context context){
         this.context = context;
     }
 
-    public static VisitChecker getInstance(Context context){
+    public static Destination getInstance(Context context){
         if(instance == null){
-            instance = new VisitChecker(context);
+            instance = new Destination(context);
             instance.mSharedPreferences = context.getSharedPreferences(KEY_CHECK_VISIT, Context.MODE_PRIVATE);
             instance.editor = mSharedPreferences.edit();
             if(!instance.mSharedPreferences.contains(KEY_IS_VISITED)) editor.putBoolean(KEY_IS_VISITED, false);

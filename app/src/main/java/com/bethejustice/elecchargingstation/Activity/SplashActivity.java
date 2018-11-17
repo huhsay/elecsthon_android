@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.bethejustice.elecchargingstation.Helper.VisitChecker;
-import com.bethejustice.elecchargingstation.MainActivity;
 import com.bethejustice.elecchargingstation.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -26,32 +25,18 @@ public class SplashActivity extends AppCompatActivity {
      * 처음방문하면 InitActivity로 화면전환한다.
      */
 
-    final String KEY_CHECK_VISITED = "visited";
-
     Handler handler = new Handler();
     private boolean isGPSEnabled, isNetworkEnabled;
     private MyPermissionListener mPermissionListener;
-    SharedPreferences mPreferences;
-    SharedPreferences.Editor mPreferencesEditor;
-
-    VisitChecker visitChecker;
+    private VisitChecker visitChecker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         visitChecker = VisitChecker.getInstance(getApplicationContext());
-        visitChecker.setSharedPreferences();
-
-//        mPreferences = getSharedPreferences(KEY_CHECK_VISITED,MODE_PRIVATE);
-//        mPreferencesEditor = mPreferences.edit();
-//
-//        if(!mPreferences.contains(KEY_CHECK_VISITED)){
-//            mPreferencesEditor.putBoolean(KEY_CHECK_VISITED, false);
-//        }
-//        mPreferencesEditor.commit();
+        //visitChecker.setSharedPreferences();
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -69,7 +54,6 @@ public class SplashActivity extends AppCompatActivity {
                         .setGotoSettingButton(true)
                         .setGotoSettingButtonText("설정")
                         .check();
-
             }
         }, 2000);
     }
@@ -134,9 +118,9 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
 
             finish();
-
         }else{
             Intent intent = new Intent(getApplicationContext(), InitActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
 
             finish();

@@ -1,19 +1,13 @@
-package com.bethejustice.elecchargingstation;
+package com.bethejustice.elecchargingstation.Activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Point;
-import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Base64;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -24,13 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bethejustice.elecchargingstation.ChangeDestDialog;
 import com.bethejustice.elecchargingstation.Model.ChargingStation;
-import com.bethejustice.elecchargingstation.Model.Juso;
+import com.bethejustice.elecchargingstation.NavigationActivity;
+import com.bethejustice.elecchargingstation.R;
+import com.bethejustice.elecchargingstation.SettingActivity;
+import com.bethejustice.elecchargingstation.StartDialog;
 import com.bethejustice.elecchargingstation.XmlParser.EnviromentXmlParser;
 
 import java.lang.ref.WeakReference;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import static com.kakao.util.helper.Utility.getPackageInfo;
@@ -125,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         mspeedview = findViewById(R.id.textview_speed);
         mrestview = findViewById(R.id.textView_restDistance);
 
-        destinationText = findViewById(R.id.textView_destination);
+        destinationText = findViewById(R.id.editView_destination);
 
         settingButton = findViewById(R.id.btn_seeAll);
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -144,14 +140,12 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "인터넷 연결을 확인해주세요.", Toast.LENGTH_LONG).show();
         }
+
         /**
          * 새로 생성될때 다이얼 로그 띄운다.
          */
         sharedPreferences = getSharedPreferences("destination", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        if(!sharedPreferences.contains("destination")) {
-            Dialog();
-        }
 
         Button setDestButton = findViewById(R.id.btn_setDest);
         setDestButton.setOnClickListener(new View.OnClickListener() {
@@ -195,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         if(!sharedPreferences.contains("destination")){
-            Dialog();
+            openStartDialog();
         }
 
        // String s = sharedPreferences.getString("destination", "목적지가 없습니다.");
@@ -203,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Dialog(){
+    public void openStartDialog(){
         dialog = new StartDialog(MainActivity.this);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);

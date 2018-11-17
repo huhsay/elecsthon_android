@@ -1,4 +1,4 @@
-package com.bethejustice.elecchargingstation;
+package com.bethejustice.elecchargingstation.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,31 +15,32 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bethejustice.elecchargingstation.Activity.InitActivity;
+import com.bethejustice.elecchargingstation.Activity.MainActivity;
 import com.bethejustice.elecchargingstation.Helper.VisitChecker;
+import com.bethejustice.elecchargingstation.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class SettingDialog extends Dialog {
+public class InitDialog extends Dialog {
 
-    final String KEY_CHECK_VISITED = "visited";
+    private static final String TAG = "InitDialog";
 
     VisitChecker visitChecker;
     Button saveButton;
-    SharedPreferences mPreferences;
-    SharedPreferences.Editor editor;
 
     EditText nickName;
     EditText safeDist;
     Spinner chargingType;
     Context context;
 
-    public SettingDialog(@NonNull Context context) {
+    public InitDialog(@NonNull Context context) {
         super(context);
 
         this.context = context;
     }
 
-    public SettingDialog(@NonNull Context context, int themeResId) {
+    public InitDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
     }
 
@@ -60,7 +61,6 @@ public class SettingDialog extends Dialog {
             @Override
             public void onClick(View v) {
 
-
                 if (checkNull()) {
 
                     SharedPreferences dataPref = getContext().getSharedPreferences("data", MODE_PRIVATE);
@@ -79,14 +79,15 @@ public class SettingDialog extends Dialog {
                     dismiss();
 
                 } else {
-                    Toast.makeText(getContext(), R.string.null_check, Toast.LENGTH_LONG);
+                    Toast.makeText(context, R.string.null_check, Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
     private boolean checkNull() {
-        if (nickName.getText() == null & safeDist.getText() == null) return false;
+        Log.d(TAG, "checkNull: ");
+        if (nickName.getText().toString().length() == 0 || safeDist.getText().toString().length() == 0) return false;
         return true;
     }
 }

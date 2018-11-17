@@ -3,7 +3,7 @@ package com.bethejustice.elecchargingstation.XmlParser;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.bethejustice.elecchargingstation.MainActivity;
+import com.bethejustice.elecchargingstation.Activity.MainActivity;
 import com.bethejustice.elecchargingstation.Model.ChargingStation;
 
 import org.w3c.dom.Document;
