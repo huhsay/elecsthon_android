@@ -23,7 +23,6 @@ public class SplashActivity extends AppCompatActivity {
      * 처음방문하면 InitActivity로 화면전환한다.
      */
 
-    private boolean first = true;
     Handler handler = new Handler();
     private boolean isGPSEnabled, isNetworkEnabled;
     private MyPermissionListener mPermissionListener;
@@ -35,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mPreferences = getSharedPreferences("firstVisit",MODE_PRIVATE);
+        mPreferences = getSharedPreferences("visited",MODE_PRIVATE);
         mPreferencesEditor = mPreferences.edit();
 
         if(!mPreferences.contains("first")){
@@ -120,20 +119,23 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void changeActivity(){
-
-        if(mPreferences.getBoolean("first", false)){
+        if(isVisited()){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
 
             finish();
 
         }else{
-
             Intent intent = new Intent(getApplicationContext(), InitActivity.class);
             startActivity(intent);
 
             finish();
         }
+    }
+
+    // 방문 확인
+    private boolean isVisited(){
+        return mPreferences.getBoolean("visited", false);
     }
 
 }

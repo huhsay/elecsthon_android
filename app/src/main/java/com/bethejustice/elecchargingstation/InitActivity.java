@@ -31,6 +31,8 @@ import java.util.List;
 
 public class InitActivity extends AppCompatActivity {
 
+    final int NUMBER_OF_INTRO_PAGE = 3;
+
     ViewPager pager;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -42,42 +44,31 @@ public class InitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_init);
         setViewPager();
 
-
-
         Button button = findViewById(R.id.btn_start);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Dialog();
-
-
-
-//                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-//                startActivity(intent);
-//
-//                finish();
             }
         });
 
     }
 
-    private void setViewPager(){
-        pager = (ViewPager) findViewById(R.id.viewPager);
-        pager.setOffscreenPageLimit(10);
+    private void setViewPager() {
+        pager = findViewById(R.id.viewPager);
+        pager.setOffscreenPageLimit(NUMBER_OF_INTRO_PAGE);
         ImageAdapter adapter = new ImageAdapter(getApplicationContext());
 
         pager.setAdapter(adapter);
 
-        CircleIndicator circleIndicator = (CircleIndicator) findViewById(R.id.circle_indicator);
+        CircleIndicator circleIndicator = findViewById(R.id.circle_indicator);
         circleIndicator.setupWithViewPager(pager);
     }
 
-    private class ImageAdapter extends PagerAdapter{
+    private class ImageAdapter extends PagerAdapter {
 
         /**
-         *  images에 사용방법 이미지 추가하기
+         * images에 사용방법 이미지 추가하기
          */
 
         int[] images = {R.drawable.tuto1, R.drawable.tuto2, R.drawable.tuto3};
@@ -105,16 +96,16 @@ public class InitActivity extends AppCompatActivity {
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
-            container.removeView((View)object);
+            container.removeView((View) object);
         }
 
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-            return view ==((ImageView) o);
+            return view == ((ImageView) o);
         }
     }
 
-    public void Dialog(){
+    public void Dialog() {
         dialog = new SettingDialog(InitActivity.this);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);
@@ -126,8 +117,8 @@ public class InitActivity extends AppCompatActivity {
 
         Window window = dialog.getWindow();
 
-        int x = (int)(size.x * 0.9f);
-        int y = (int)(size.y * 0.7f);
+        int x = (int) (size.x * 0.9f);
+        int y = (int) (size.y * 0.7f);
         window.setLayout(x, y);
     }
 }
