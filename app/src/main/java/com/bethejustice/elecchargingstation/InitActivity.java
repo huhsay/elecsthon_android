@@ -31,6 +31,7 @@ import java.util.List;
 
 public class InitActivity extends AppCompatActivity {
 
+    private static final String TAG = "InitActivity";
     final int NUMBER_OF_INTRO_PAGE = 3;
 
     ViewPager pager;
@@ -106,6 +107,7 @@ public class InitActivity extends AppCompatActivity {
     }
 
     public void Dialog() {
+        Log.d(TAG, "Dialog: started");
         dialog = new SettingDialog(InitActivity.this);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);
