@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +14,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,7 +80,7 @@ public class InitActivity extends AppCompatActivity {
          *  images에 사용방법 이미지 추가하기
          */
 
-        int[] images = {R.drawable.ic_menu_camera, R.drawable.ic_menu_gallery, R.drawable.ic_menu_manage};
+        int[] images = {R.drawable.tuto1, R.drawable.tuto2, R.drawable.tuto3};
         Context context;
 
         public ImageAdapter(Context context) {
@@ -116,5 +119,15 @@ public class InitActivity extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);
         dialog.show();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        Window window = dialog.getWindow();
+
+        int x = (int)(size.x * 0.9f);
+        int y = (int)(size.y * 0.7f);
+        window.setLayout(x, y);
     }
 }
