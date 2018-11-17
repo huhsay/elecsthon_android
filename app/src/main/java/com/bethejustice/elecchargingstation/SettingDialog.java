@@ -15,12 +15,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bethejustice.elecchargingstation.Helper.VisitChecker;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class SettingDialog extends Dialog {
 
     final String KEY_CHECK_VISITED = "visited";
 
+    VisitChecker visitChecker;
     Button saveButton;
     SharedPreferences mPreferences;
     SharedPreferences.Editor editor;
@@ -28,9 +31,12 @@ public class SettingDialog extends Dialog {
     EditText nickName;
     EditText safeDist;
     Spinner chargingType;
+    Context context;
 
     public SettingDialog(@NonNull Context context) {
         super(context);
+
+        this.context = context;
     }
 
     public SettingDialog(@NonNull Context context, int themeResId) {
@@ -47,14 +53,15 @@ public class SettingDialog extends Dialog {
         safeDist = findViewById(R.id.edit_safe);
         chargingType = findViewById(R.id.spinner_type);
 
+        visitChecker = VisitChecker.getInstance(context);
+
         saveButton = findViewById(R.id.btn_save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (checkNull()) {
 
-                    checkVisit();
+                if (checkNull()) {
 
                     SharedPreferences dataPref = getContext().getSharedPreferences("data", MODE_PRIVATE);
                     SharedPreferences.Editor dataEditor = dataPref.edit();
@@ -68,6 +75,7 @@ public class SettingDialog extends Dialog {
 
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     getContext().startActivity(intent);
+                    visitChecker.setVisited();
                     dismiss();
 
                 } else {
@@ -78,22 +86,7 @@ public class SettingDialog extends Dialog {
     }
 
     private boolean checkNull() {
-        if (nickName.getText() == null || safeDist.getText() == null) return false;
+        if (nickName.getText() == null & safeDist.getText() == null) return false;
         return true;
-    }
-
-    private boolean isVisited() {
-        return mPreferences.contains(KEY_CHECK_VISITED);
-    }
-
-    private void checkVisit(){
-        mPreferences = getContext().getSharedPreferences(KEY_CHECK_VISITED, MODE_PRIVATE);
-        editor = mPreferences.edit();
-
-        if(isVisited()){
-            editor.remove(KEY_CHECK_VISITED);
-        }
-        editor.putBoolean(KEY_CHECK_VISITED, true);
-        editor.commit();
     }
 }

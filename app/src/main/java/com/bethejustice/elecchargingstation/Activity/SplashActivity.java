@@ -1,4 +1,4 @@
-package com.bethejustice.elecchargingstation;
+package com.bethejustice.elecchargingstation.Activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bethejustice.elecchargingstation.Helper.VisitChecker;
+import com.bethejustice.elecchargingstation.MainActivity;
+import com.bethejustice.elecchargingstation.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -23,25 +26,32 @@ public class SplashActivity extends AppCompatActivity {
      * 처음방문하면 InitActivity로 화면전환한다.
      */
 
+    final String KEY_CHECK_VISITED = "visited";
+
     Handler handler = new Handler();
     private boolean isGPSEnabled, isNetworkEnabled;
     private MyPermissionListener mPermissionListener;
     SharedPreferences mPreferences;
     SharedPreferences.Editor mPreferencesEditor;
 
+    VisitChecker visitChecker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mPreferences = getSharedPreferences("visited",MODE_PRIVATE);
-        mPreferencesEditor = mPreferences.edit();
 
-        if(!mPreferences.contains("first")){
-            mPreferencesEditor.putBoolean("first", false);
-        }
-        mPreferencesEditor.commit();
+        visitChecker = VisitChecker.getInstance(getApplicationContext());
+        visitChecker.setSharedPreferences();
 
+//        mPreferences = getSharedPreferences(KEY_CHECK_VISITED,MODE_PRIVATE);
+//        mPreferencesEditor = mPreferences.edit();
+//
+//        if(!mPreferences.contains(KEY_CHECK_VISITED)){
+//            mPreferencesEditor.putBoolean(KEY_CHECK_VISITED, false);
+//        }
+//        mPreferencesEditor.commit();
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -119,7 +129,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void changeActivity(){
-        if(isVisited()){
+        if(visitChecker.isVisited()){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
 
@@ -132,10 +142,4 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }
     }
-
-    // 방문 확인
-    private boolean isVisited(){
-        return mPreferences.getBoolean("visited", false);
-    }
-
 }

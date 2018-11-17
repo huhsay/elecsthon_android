@@ -1,14 +1,9 @@
-package com.bethejustice.elecchargingstation;
+package com.bethejustice.elecchargingstation.Activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,18 +11,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
+import com.bethejustice.elecchargingstation.R;
+import com.bethejustice.elecchargingstation.SettingDialog;
 import com.pm10.library.CircleIndicator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InitActivity extends AppCompatActivity {
 

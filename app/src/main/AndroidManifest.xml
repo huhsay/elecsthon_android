@@ -28,14 +28,14 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key"/>
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InitActivity" />
+        <activity android:name=".Activity.InitActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
