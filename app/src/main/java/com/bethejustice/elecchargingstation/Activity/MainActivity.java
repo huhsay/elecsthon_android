@@ -33,7 +33,7 @@ import static com.kakao.util.helper.Utility.getPackageInfo;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String destination=null;
+    public static String destination = null;
 
     StartDialog dialog;
     ChangeDestDialog changeDestDialog;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void set_01ChargingStations(ArrayList<ChargingStation> _01ChargingStations) {
 
-        if(MainActivity._01ChargingStations != null )
+        if (MainActivity._01ChargingStations != null)
             MainActivity._01ChargingStations.clear();
 
         MainActivity._01ChargingStations = _01ChargingStations;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void set_03ChargingStations(ArrayList<ChargingStation> _03ChargingStations) {
 
-        if(MainActivity._03ChargingStations != null )
+        if (MainActivity._03ChargingStations != null)
             MainActivity._03ChargingStations.clear();
 
         MainActivity._03ChargingStations = _03ChargingStations;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void set_06ChargingStations(ArrayList<ChargingStation> _06Dc_demo_ChargingStations) {
 
-        if(MainActivity._06ChargingStations != null )
+        if (MainActivity._06ChargingStations != null)
             MainActivity._06ChargingStations.clear();
 
         MainActivity._06ChargingStations = _06Dc_demo_ChargingStations;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==100){
+        if (requestCode == 100) {
             destination = data.getStringExtra("doro");
         }
     }
@@ -132,21 +132,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE); //네트워크 체크를위한 변수
+        cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE); //네트워크 체크를위한 변수
 
         //파싱시작
-        if(isNetworkConnected()) {
+        if (isNetworkConnected()) {
             new EnviromentXmlParser().execute();
-        }else{
+        } else {
             Toast.makeText(this, "인터넷 연결을 확인해주세요.", Toast.LENGTH_LONG).show();
         }
+
+
+        sharedPreferences = getSharedPreferences("destination", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         /**
          * 새로 생성될때 다이얼 로그 띄운다.
          */
-        sharedPreferences = getSharedPreferences("destination", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
         Button setDestButton = findViewById(R.id.btn_setDest);
         setDestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,38 +167,45 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /**
+         * 목적지 확인
+         */
+        //checkDestinationSetting();
+    }
+
+    private void checkDestinationSetting() {
+        SharedPreferences sharedPreferences = getSharedPreferences("destination", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (sharedPreferences.contains("destination")) {
+            destination = sharedPreferences.getString("destination", "목적지가 없습니다.");
+            destinationText.setText(destination);
+        }else{
+            openStartDialog();
+        }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        destinationText.setText("");
-        editor.remove("destination");
-        editor.commit();
-    }
-
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        //destinationText.setText("");
+//        destinationText.setText("");
 //        editor.remove("destination");
 //        editor.commit();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(!sharedPreferences.contains("destination")){
-            openStartDialog();
-        }
-
-       // String s = sharedPreferences.getString("destination", "목적지가 없습니다.");
-        //destinationText.setText(s);
-
+    protected void onRestart() {
+        super.onRestart();
     }
 
-    public void openStartDialog(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkDestinationSetting();
+    }
+
+    public void openStartDialog() {
         dialog = new StartDialog(MainActivity.this);
         dialog.getWindow().setGravity(Gravity.CENTER);
         dialog.setCancelable(false);
@@ -209,12 +217,12 @@ public class MainActivity extends AppCompatActivity {
 
         Window window = dialog.getWindow();
 
-        int x = (int)(size.x * 0.8f);
-        int y = (int)(size.y * 0.5f);
+        int x = (int) (size.x * 0.8f);
+        int y = (int) (size.y * 0.5f);
         window.setLayout(x, y);
     }
 
-    public void ChangeDialog(){
+    public void ChangeDialog() {
         changeDestDialog = new ChangeDestDialog(MainActivity.this);
         changeDestDialog.getWindow().setGravity(Gravity.CENTER);
         changeDestDialog.setCancelable(false);
@@ -226,13 +234,13 @@ public class MainActivity extends AppCompatActivity {
 
         Window window = changeDestDialog.getWindow();
 
-        int x = (int)(size.x * 0.8f);
-        int y = (int)(size.y * 0.4f);
+        int x = (int) (size.x * 0.8f);
+        int y = (int) (size.y * 0.4f);
         window.setLayout(x, y);
     }
 
 
-    public static String getDoro(){
+    public static String getDoro() {
         return destination;
     }
 
@@ -247,10 +255,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch(msg.what) {
+            switch (msg.what) {
                 case MESSAGE_CONNECT:
-                    if(!handlestate){
-                        Toast.makeText((SettingActivity)SettingActivity.settingContext,msg.getData().getString("connect") ,Toast.LENGTH_SHORT).show();
+                    if (!handlestate) {
+                        Toast.makeText((SettingActivity) SettingActivity.settingContext, msg.getData().getString("connect"), Toast.LENGTH_SHORT).show();
                         handlestate = true;
                     }
                     MainActivity activity = mActivity.get();
@@ -259,12 +267,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case MESSAGE_FAIL:
-                    if(handlestate) handlestate = false;
-                    Toast.makeText((SettingActivity)SettingActivity.settingContext,msg.getData().getString("fail") ,Toast.LENGTH_SHORT).show();
+                    if (handlestate) handlestate = false;
+                    Toast.makeText((SettingActivity) SettingActivity.settingContext, msg.getData().getString("fail"), Toast.LENGTH_SHORT).show();
                     break;
                 case MESSAGE_NOTDEVICE:
-                    if(handlestate) handlestate = false;
-                    Toast.makeText((SettingActivity)SettingActivity.settingContext,msg.getData().getString("disconnected") ,Toast.LENGTH_SHORT).show();
+                    if (handlestate) handlestate = false;
+                    Toast.makeText((SettingActivity) SettingActivity.settingContext, msg.getData().getString("disconnected"), Toast.LENGTH_SHORT).show();
                     break;
             }
         }

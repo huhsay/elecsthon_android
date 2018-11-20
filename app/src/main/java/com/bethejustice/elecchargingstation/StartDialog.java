@@ -3,6 +3,7 @@ package com.bethejustice.elecchargingstation;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 public class StartDialog extends Dialog {
+    private static final String TAG = "StartDialog";
 
     static int state;
 
@@ -28,10 +30,12 @@ public class StartDialog extends Dialog {
     EditText destinationEditView;
     TextView destinationTextView;
     String destination = null;
+    Context context;
 
 
     public StartDialog(@NonNull Context context) {
         super(context);
+        this.context = context;
     }
 
     public StartDialog(@NonNull Context context, int themeResId) {
@@ -60,7 +64,7 @@ public class StartDialog extends Dialog {
                 Intent intent = new Intent(getContext(), JusoListActivity.class);
 
                 if (destinationEditView.getText().toString().length() == 0) {
-                    Toast.makeText(getContext(), "값을 알려주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "주소를 입력해주세요", Toast.LENGTH_SHORT).show();
                 } else {
                     //공백이 아니라면 해당 키워드로 이동
                     String keyword = destinationEditView.getText().toString();
@@ -105,6 +109,20 @@ public class StartDialog extends Dialog {
                 /**
                  *
                  */
+
+                if(checkBox.isChecked()){
+                    Log.d(TAG, "onClick: checkBox is checked");
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("destination", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    if(sharedPreferences.contains("destination")){
+                        editor.remove("destination");
+                    }
+                    editor.putString("destination", "목적지가 없습니다.");
+                    editor.commit();
+
+                    String s = sharedPreferences.getString(destination, "fail");
+                    Log.d(TAG, "onClick: preference changed"+s);
+                }
 
                 dismiss();
             }
