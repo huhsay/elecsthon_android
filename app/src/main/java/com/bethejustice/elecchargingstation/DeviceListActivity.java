@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import java.util.Set;
 
-
 /**
  * This Activity appears as a dialog. It lists any paired devices and
  * devices detected in the area after discovery. When a device is chosen
@@ -30,7 +29,6 @@ import java.util.Set;
  * Activity in the result Intent.
  */
 public class DeviceListActivity extends Activity {
-    // Debugging
     private static final String TAG = "DeviceListActivity";
     private static final boolean D = true;
 

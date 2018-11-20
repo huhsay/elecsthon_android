@@ -67,7 +67,6 @@ public class BluetoothService {
         mActivity = ac;
         mHandler = h;
 
-        // BluetoothAdapter ���
         btAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
@@ -116,13 +115,11 @@ public class BluetoothService {
         Log.i(TAG, "Check the enabled Bluetooth");
 
         if (btAdapter.isEnabled()) {
-            // ����� ������� ���°� On�� ���
             Log.d(TAG, "Bluetooth Enable Now");
 
             // Next Step
             scanDevice();
         } else {
-            // ����� ������� ���°� Off�� ���
             Log.d(TAG, "Bluetooth Enable Request");
 
             Intent i = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -266,7 +263,7 @@ public class BluetoothService {
         r.write(out);
     }
 
-    // ���� ����������
+    // 연결 실패시 처리하는 메소드
     private void connectionFailed() {
         Message msg = mHandler.obtainMessage(MESSAGE_FAIL);
         Bundle bundle = new Bundle();
@@ -320,9 +317,11 @@ public class BluetoothService {
 
         public void run() {
             Log.i(TAG, "BEGIN mConnectThread");
+            // 연결시작정 검색을 멈춘다.
+            // 연결시 검색을 계속하면 속도가 느려진다.
             btAdapter.cancelDiscovery();
 
-            // BluetoothSocket ���� �õ�
+            // BluetoothSocket 연결 시도
             try {
                 // BluetoothSocket ���� �õ��� ���� return ���� succes �Ǵ� exception�̴�.
                 mmSocket.connect();
@@ -332,7 +331,7 @@ public class BluetoothService {
                 connectionFailed();
                 Log.d(TAG, "Connect Fail");
 
-                // socket�� �ݴ´�.
+                // socket을 닫는다.
                 try {
                     mmSocket.close();
                 } catch (IOException e2) {
@@ -340,12 +339,12 @@ public class BluetoothService {
                             "unable to close() socket during connection failure",
                             e2);
                 }
-                // ������? Ȥ�� ���� �������� �޼ҵ带 ȣ���Ѵ�.
+
                 BluetoothService.this.start();
                 return;
             }
 
-            // ConnectThread Ŭ������ reset�Ѵ�.
+            // ConnectThread 클래스를 reset한다.
             synchronized (BluetoothService.this) {
                 mConnectThread = null;
             }

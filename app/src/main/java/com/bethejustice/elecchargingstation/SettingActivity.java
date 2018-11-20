@@ -95,10 +95,6 @@ public class SettingActivity extends AppCompatActivity {
                 dataEditor.putInt("safe", Integer.parseInt(safeDist.getText().toString()));
                 dataEditor.commit();
 
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivity(intent);
-
                 finish();
             }
         });

@@ -32,7 +32,7 @@
 
     <EditText
         android:id="@+id/text_dest"
-        android:layout_width="match_parentontent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
