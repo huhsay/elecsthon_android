@@ -57,10 +57,6 @@ public class InitActivity extends AppCompatActivity {
 
     private class ImageAdapter extends PagerAdapter {
 
-        /**
-         * images에 사용방법 이미지 추가하기
-         */
-
         int[] images = {R.drawable.tuto1, R.drawable.tuto2, R.drawable.tuto3};
         Context context;
 
